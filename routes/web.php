@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\UserAppController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,9 +23,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('admin.dashboard');
     });
-    Route::get('/user-management', function () {
-        return view('admin.user-management');
-    });
+
+    Route::resource('userapp', UserAppController::class);
+
     Route::get('/user-history', function () {
         return view('admin.user-history');
     });
