@@ -102,7 +102,7 @@
                             <input type="file" class="form-control" id="profile_picture" name="profile_picture">
                         </div>
                         @php
-                            $generatedCode = 'ALAT_' . uniqid();
+                            $generatedCode = uniqid();
                         @endphp
                         <div class="form-group">
                             <label for="kode_alat">Kode Alat</label>

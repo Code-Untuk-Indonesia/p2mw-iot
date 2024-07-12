@@ -16,7 +16,7 @@ class DefaultUserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => 'Jhon Doe',
+            'name' => 'Kresna Satya Nugroho',
             'email' => 'kisnak@admin.com',
             'email_verified_at' => now(),
             'password' => Hash::make('123456'),
