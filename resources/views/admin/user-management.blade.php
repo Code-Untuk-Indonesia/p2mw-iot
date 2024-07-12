@@ -37,10 +37,9 @@
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="{{ asset('/images/profile_picture/' . $user->profile_picture) }}"
-                                                            class="avatar avatar-sm me-3" alt="user1">
-                                                    </div>
+                                                    <img src="{{ Storage::url($user->profile_picture) }}" class="avatar avatar-sm me-3" alt="user1">
+
+
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <h6 class="mb-0 text-sm">{{ $user->name }}</h6>
                                                         <p class="text-xs text-secondary mb-0">{{ $user->email }}</p>

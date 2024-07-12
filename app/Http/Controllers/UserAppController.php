@@ -28,22 +28,23 @@ class UserAppController extends Controller
             'profile_picture' => 'image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
-        // $path = $request->file('profile_picture') ? $request->file('profile_picture')->store('profile_pictures', 'public') : null;
+        // Inisialisasi variabel untuk menyimpan path gambar
+        $gambarPath = null;
 
         if ($request->hasFile('profile_picture')) {
-            $gambar = $request->file('profile_picture');
-            $profilPic = time() . '_profile_picture.' . $gambar->getClientOriginalExtension();
-            $gambarPath = public_path('images/profile_picture');
-            $gambar->move($gambarPath, $profilPic);
+            // Simpan gambar di storage publik dan dapatkan path relatifnya
+            $gambarPath = $request->file('profile_picture')->store('images/profile_picture', 'public');
         }
 
+        // Buat user baru dan simpan data termasuk path gambar
         UserApp::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'profile_picture' => $gambar
+            'profile_picture' => $gambarPath
         ]);
 
         return redirect()->route('userapp.index')->with('success', 'User created successfully.');
     }
+
 }
