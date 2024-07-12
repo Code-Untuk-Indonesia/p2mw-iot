@@ -9,11 +9,12 @@ class CreateUserAppsTable extends Migration
     public function up()
     {
         Schema::create('user_apps', function (Blueprint $table) {
-            $table->id();
+            $table->id('UniqueID');
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
             $table->string('profile_picture')->nullable();
+            $table->string('kode_alat')->nullable()->unique();
             $table->timestamps();
         });
     }

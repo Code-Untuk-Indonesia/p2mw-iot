@@ -37,7 +37,8 @@
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
-                                                    <img src="{{ Storage::url($user->profile_picture) }}" class="avatar avatar-sm me-3" alt="user1">
+                                                    <img src="{{ Storage::url($user->profile_picture) }}"
+                                                        class="avatar avatar-sm me-3" alt="user1">
 
 
                                                     <div class="d-flex flex-column justify-content-center">
@@ -99,6 +100,14 @@
                         <div class="form-group">
                             <label for="profile_picture">Profile Picture</label>
                             <input type="file" class="form-control" id="profile_picture" name="profile_picture">
+                        </div>
+                        @php
+                            $generatedCode = 'ALAT_' . uniqid();
+                        @endphp
+                        <div class="form-group">
+                            <label for="kode_alat">Kode Alat</label>
+                            <input type="text" class="form-control" id="kode_alat" name="kode_alat"
+                                value="{{ $generatedCode }}" readonly>
                         </div>
                         <button type="submit" class="btn btn-primary">Add User</button>
                     </form>

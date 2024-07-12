@@ -19,17 +19,21 @@ class UserAppController extends Controller
         return view('users.create');
     }
 
+
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:user_apps',
             'password' => 'required|min:6',
             'profile_picture' => 'image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
         // Inisialisasi variabel untuk menyimpan path gambar
         $gambarPath = null;
+
+        // Generate kode_alat secara otomatis
+        // $generatedCode = 'ALAT_' . uniqid();
 
         if ($request->hasFile('profile_picture')) {
             // Simpan gambar di storage publik dan dapatkan path relatifnya
@@ -41,10 +45,10 @@ class UserAppController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'profile_picture' => $gambarPath
+            'profile_picture' => $gambarPath,
+            'kode_alat' => $request->kode_alat,
         ]);
 
         return redirect()->route('userapp.index')->with('success', 'User created successfully.');
     }
-
 }
