@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserApp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UserAppController extends Controller
 {
@@ -22,11 +23,13 @@ class UserAppController extends Controller
 
     public function store(Request $request)
     {
+        Log::info('Request data:', $request->all());
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:user_apps',
             'password' => 'required|min:6',
             'profile_picture' => 'image|mimes:jpeg,png,jpg,gif,svg',
+            'kode_alat' => 'nullable|exists:alats,Kode_alat',
         ]);
 
         // Inisialisasi variabel untuk menyimpan path gambar
@@ -41,14 +44,14 @@ class UserAppController extends Controller
         }
 
         // Buat user baru dan simpan data termasuk path gambar
-        UserApp::create([
+        $userApp = UserApp::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'profile_picture' => $gambarPath,
             'kode_alat' => $request->kode_alat,
         ]);
-
+        Log::info('User created:', $userApp->toArray());
         return redirect()->route('userapp.index')->with('success', 'User created successfully.');
     }
 }

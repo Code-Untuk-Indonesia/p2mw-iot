@@ -9,7 +9,12 @@ class Alat extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'Kode_alat';
+    public $incrementing = false;
+    protected $keyType = 'unsignedBigInteger';
+
     protected $fillable = [
+        'Kode_alat',
         'kejadian',
         'user_id',
     ];
