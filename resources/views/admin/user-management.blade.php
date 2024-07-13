@@ -48,7 +48,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $user->alats->Kode_alat }}</p>
+                                                {{-- <p class="text-xs font-weight-bold mb-0">{{ $user->alats->Kode_alat }}</p> --}}
                                             </td>
                                             {{-- <td class="align-middle text-center text-sm">
                                                 <span class="badge badge-sm bg-gradient-success">Online</span>
@@ -104,11 +104,7 @@
                         @php
                             $generatedCode = uniqid();
                         @endphp
-                        <div class="form-group">
-                            <label for="kode_alat">Kode Alat</label>
-                            <input type="text" class="form-control" id="kode_alat" name="kode_alat"
-                                value="{{ $generatedCode }}" readonly>
-                        </div>
+
                         <button type="submit" class="btn btn-primary">Add User</button>
                     </form>
                 </div>

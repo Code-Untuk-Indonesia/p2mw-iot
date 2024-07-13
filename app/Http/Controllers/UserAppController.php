@@ -29,7 +29,7 @@ class UserAppController extends Controller
             'email' => 'required|email|unique:user_apps',
             'password' => 'required|min:6',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-            'kode_alat' => 'nullable|exists:alats,Kode_alat',
+
         ]);
 
         // Inisialisasi variabel untuk menyimpan path gambar
@@ -49,7 +49,7 @@ class UserAppController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'profile_picture' => $gambarPath,
-            'kode_alat' => $request->kode_alat,
+
         ]);
         Log::info('User created:', $userApp->toArray());
         return redirect()->route('userapp.index')->with('success', 'User created successfully.');
