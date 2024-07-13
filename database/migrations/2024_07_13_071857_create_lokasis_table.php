@@ -12,9 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('lokasis', function (Blueprint $table) {
-            $table->id('Lokasi_id');
+            $table->id();
+            $table->unsignedBigInteger('alat_id');
+            $table->string('long');
             $table->string('lat');
-            $table->string('lon');
+            $table->foreign('alat_id')->references('id')->on('alats')->onDelete('cascade');
             $table->timestamps();
         });
     }

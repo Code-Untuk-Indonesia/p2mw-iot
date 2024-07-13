@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,23 +8,28 @@ class Alat extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'Kode_alat';
-    public $incrementing = false;
-    protected $keyType = 'unsignedBigInteger';
-
     protected $fillable = [
-        'Kode_alat',
-        'kejadian',
-        'user_id',
+        'userapps_id',
+        'kejadian'
     ];
 
-    public function user()
+    public function userApp()
     {
-        return $this->belongsTo(UserApp::class, 'user_id', 'UniqueID');
+        return $this->belongsTo(UserApp::class, 'userapps_id', 'UniqueID');
+    }
+
+    public function lokasis()
+    {
+        return $this->hasMany(Lokasi::class, 'alat_id');
     }
 
     public function histories()
     {
-        return $this->hasMany(History::class, 'id_alat', 'Kode_alat');
+        return $this->hasMany(History::class, 'id_alat');
+    }
+
+    public function realtimes()
+    {
+        return $this->hasMany(Realtime::class, 'alat_id');
     }
 }

@@ -1,25 +1,25 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class UserApp extends Authenticatable
+class UserApp extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
+
+    protected $table = 'user_apps';
 
     protected $fillable = [
         'name',
         'email',
         'password',
         'profile_picture',
-        'kode_alat',
+        'kode_alat'
     ];
 
     public function alat()
     {
-        return $this->hasOne(Alat::class, 'user_id', 'UniqueID');
+        return $this->hasOne(Alat::class, 'userapps_id', 'UniqueID');
     }
 }

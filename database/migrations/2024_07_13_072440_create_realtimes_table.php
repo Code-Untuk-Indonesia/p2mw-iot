@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('realtimes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('Lokasi_id');
-            $table->string('lat');
-            $table->string('lon');
-            $table->foreign('Lokasi_id')->references('Lokasi_id')->on('lokasis')->onDelete('cascade');
+            $table->unsignedBigInteger('lokasi_id');
+            $table->unsignedBigInteger('alat_id');
+            $table->foreign('lokasi_id')->references('id')->on('lokasis')->onDelete('cascade');
+            $table->foreign('alat_id')->references('id')->on('alats')->onDelete('cascade');
             $table->timestamps();
         });
     }

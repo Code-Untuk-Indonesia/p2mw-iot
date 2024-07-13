@@ -33,38 +33,37 @@
                                 </thead>
                                 <tbody>
                                     <!-- Loop through users -->
-                                    @foreach ($users as $user)
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <img src="{{ Storage::url($user->profile_picture) }}"
-                                                        class="avatar avatar-sm me-3" alt="user1">
+                                    @foreach ($alat as $item) <!-- Mengganti variabel $user menjadi $item untuk konsistensi dengan data alat -->
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <!-- Menampilkan foto profil pengguna dari userapp -->
+                                                <img src="{{ Storage::url($item->userapp->profile_picture) }}"
+                                                     class="avatar avatar-sm me-3"
+                                                     alt="{{ $item->userapp->name }}">
 
-
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{ $user->name }}</h6>
-                                                        <p class="text-xs text-secondary mb-0">{{ $user->email }}</p>
-                                                    </div>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <!-- Menampilkan nama pengguna dari userapp -->
+                                                    <h6 class="mb-0 text-sm">{{ $item->userapp->name }}</h6>
+                                                    <!-- Menampilkan email pengguna dari userapp -->
+                                                    <p class="text-xs text-secondary mb-0">{{ $item->userapp->email }}</p>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $user->alats->Kode_alat }}</p>
-                                            </td>
-                                            {{-- <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-success">Online</span>
-                                            </td> --}}
-                                            {{-- <td class="align-middle text-center">
-                                                <span
-                                                    class="text-secondary text-xs font-weight-bold">{{ $user->created_at->format('d/m/y') }}</span>
-                                            </td> --}}
-                                            <td class="align-middle">
-                                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                    data-toggle="tooltip" data-original-title="Edit user">
-                                                    Edit
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <!-- Menampilkan Kode_alat -->
+                                            <p class="text-xs font-weight-bold mb-0">{{ $item->Kode_alat }}</p>
+                                        </td>
+                                        <td class="align-middle">
+                                            <!-- Tautan Edit -->
+                                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
+                                               data-toggle="tooltip" data-original-title="Edit user">
+                                               Edit
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
                                 </tbody>
                             </table>
                         </div>

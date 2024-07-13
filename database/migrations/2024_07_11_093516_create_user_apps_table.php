@@ -14,9 +14,9 @@ class CreateUserAppsTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('profile_picture')->nullable();
-            $table->unsignedBigInteger('kode_alat')->nullable()->unique();
             $table->timestamps();
-        });
+
+                });
     }
 
     public function down()

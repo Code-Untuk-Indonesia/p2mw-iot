@@ -9,17 +9,19 @@ class History extends Model
 {
     use HasFactory;
 
+
     protected $fillable = [
         'id_alat',
+        'Lokasi_id'
     ];
 
     public function alat()
     {
-        return $this->belongsTo(Alat::class, 'id_alat', 'Kode_alat');
+        return $this->belongsTo(Alat::class, 'id_alat');
     }
 
-    public function lokasis()
+    public function lokasi()
     {
-        return $this->belongsToMany(Lokasi::class, 'history_lokasi', 'history_id', 'lokasi_id');
+        return $this->belongsTo(Lokasi::class, 'Lokasi_id');
     }
 }

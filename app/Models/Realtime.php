@@ -10,13 +10,17 @@ class Realtime extends Model
     use HasFactory;
 
     protected $fillable = [
-        'Lokasi_id',
-        'lat',
-        'lon',
+        'lokasi_id',
+        'alat_id'
     ];
 
     public function lokasi()
     {
-        return $this->belongsTo(Lokasi::class, 'Lokasi_id', 'Lokasi_id');
+        return $this->belongsTo(Lokasi::class, 'lokasi_id');
+    }
+
+    public function alat()
+    {
+        return $this->belongsTo(Alat::class, 'alat_id');
     }
 }

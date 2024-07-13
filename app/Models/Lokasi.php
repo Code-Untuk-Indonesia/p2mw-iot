@@ -8,19 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class Lokasi extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'lat',
-        'lon',
+        'alat_id',
+        'long',
+        'lat'
     ];
+
+    public function alat()
+    {
+        return $this->belongsTo(Alat::class, 'alat_id');
+    }
 
     public function histories()
     {
-        return $this->belongsToMany(History::class, 'history_lokasi', 'lokasi_id', 'history_id');
+        return $this->hasMany(History::class, 'Lokasi_id');
     }
 
     public function realtimes()
     {
-        return $this->hasMany(Realtime::class, 'Lokasi_id', 'Lokasi_id');
+        return $this->hasMany(Realtime::class, 'lokasi_id');
     }
 }

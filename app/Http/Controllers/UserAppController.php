@@ -28,7 +28,7 @@ class UserAppController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:user_apps',
             'password' => 'required|min:6',
-            'profile_picture' => 'image|mimes:jpeg,png,jpg,gif,svg',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'kode_alat' => 'nullable|exists:alats,Kode_alat',
         ]);
 
