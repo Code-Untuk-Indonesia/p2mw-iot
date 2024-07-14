@@ -18,7 +18,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:user_apps',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string|min:6|confirmed',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif'
         ]);
 
@@ -45,7 +45,8 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'profile_picture_url' => $user->profile_picture ? asset('storage/' . $user->profile_picture) : null
+            'profile_picture_url' => $user->profile_picture ? asset('storage/' . $user->profile_picture) : null,
+            'user_id' => $user->UniqueID,
         ], 201);
     }
 
@@ -68,6 +69,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
+            'user_id' => $user->UniqueID,
         ], 200);
     }
 
