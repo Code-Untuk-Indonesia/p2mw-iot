@@ -1,5 +1,5 @@
 @extends('template-admin.navbar-footer')
-
+@section('title', 'User History')
 @section('content')
     <div class="container-fluid py-4">
         <div class="row">

@@ -1,4 +1,5 @@
 @extends('template-admin.navbar-footer')
+@section('title', 'Dashboard')
 @section('content')
     <div class="container-fluid py-4">
         <div class="row">
@@ -10,7 +11,7 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Users</p>
                                     <h5 class="font-weight-bolder mb-0">
-                                        di isi pake total user
+                                        {{ $totalUsers }}
                                     </h5>
                                 </div>
                             </div>
@@ -31,7 +32,7 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Products</p>
                                     <h5 class="font-weight-bolder mb-0">
-                                        isi pake total kode alat
+                                        {{ $totalProducts }}
                                     </h5>
                                 </div>
                             </div>
@@ -65,16 +66,15 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="col-xl-3 col-sm-6">
+            <div class="col-xl-3 col-sm-6">
                 <div class="card">
                     <div class="card-body p-3">
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Sales</p>
+                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">no ide</p>
                                     <h5 class="font-weight-bolder mb-0">
-                                        $103,430
-                                        <span class="text-success text-sm font-weight-bolder">+5%</span>
+                                        bingung
                                     </h5>
                                 </div>
                             </div>
@@ -86,7 +86,7 @@
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
         </div>
     </div>
 @endsection

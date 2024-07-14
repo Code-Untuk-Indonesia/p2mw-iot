@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlatController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserAppController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,9 +22,7 @@ Route::get('/dashboard', function () {
 })->middleware('auth');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    });
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::resource('userapp', UserAppController::class);
     Route::resource('alats', AlatController::class);
