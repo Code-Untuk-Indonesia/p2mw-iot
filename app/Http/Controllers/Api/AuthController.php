@@ -78,4 +78,36 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Successfully logged out']);
     }
+
+    // update
+    public function update(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:6',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $profilePicturePath = null;
+        if ($request->hasFile('profile_picture')) {
+            $profilePicture = $request->file('profile_picture');
+            $profilePictureName = time() . '_' . $profilePicture->getClientOriginalName();
+            $profilePicturePath = $profilePicture->storeAs('profile_pictures', $profilePictureName, 'public');
+        }
+
+        $user = Auth::guard('api')->user();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->profile_picture = $profilePicturePath;
+        $user->save();
+
+        return response()->json(['message' => 'Successfully updated!'], 200);
+    }
 }
