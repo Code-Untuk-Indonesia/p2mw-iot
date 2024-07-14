@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,6 +10,8 @@ class UserApp extends Model
     use HasFactory;
 
     protected $table = 'user_apps';
+
+    protected $primaryKey = 'UniqueID';
 
     protected $fillable = [
         'name',
@@ -21,5 +24,10 @@ class UserApp extends Model
     public function alat()
     {
         return $this->hasOne(Alat::class, 'userapps_id', 'UniqueID');
+    }
+
+    public function getKeyName()
+    {
+        return 'UniqueID';
     }
 }

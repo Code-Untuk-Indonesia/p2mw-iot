@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\History;
 use App\Models\UserApp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -53,5 +54,13 @@ class UserAppController extends Controller
         ]);
         Log::info('User created:', $userApp->toArray());
         return redirect()->route('userapp.index')->with('success', 'User created successfully.');
+    }
+
+    public function history(UserApp $userApp)
+    {
+        $histories = History::whereHas('alat', function ($query) use ($userApp) {
+            $query->where('userapps_id', $userApp->UniqueID);
+        })->with('alat', 'lokasi')->get();
+        return view('admin.user-history', compact('userApp', 'histories'));
     }
 }

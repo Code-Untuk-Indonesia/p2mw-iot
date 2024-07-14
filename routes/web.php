@@ -28,11 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('userapp', UserAppController::class);
     Route::resource('alats', AlatController::class);
 
-    Route::get('/user-history', function () {
-        return view('admin.user-history');
-    });
-
-
+    Route::get('userapp/{userApp}/history', [UserAppController::class, 'history'])->name('userapp.history');
 });
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');

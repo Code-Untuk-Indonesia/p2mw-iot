@@ -15,8 +15,7 @@ class CreateUserAppsTable extends Migration
             $table->string('password');
             $table->string('profile_picture')->nullable();
             $table->timestamps();
-
-                });
+        });
     }
 
     public function down()

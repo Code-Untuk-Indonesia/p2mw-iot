@@ -21,10 +21,7 @@
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Kode Alat</th>
-                                        {{-- <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Status</th> --}}
+                                            Email</th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Terdaftar</th>
@@ -32,31 +29,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Loop through users -->
                                     @foreach ($users as $user)
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
                                                     <img src="{{ Storage::url($user->profile_picture) }}"
                                                         class="avatar avatar-sm me-3" alt="user1">
-
-
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{ $user->name }}</h6>
-                                                        <p class="text-xs text-secondary mb-0">{{ $user->email }}</p>
+                                                        <a href={{ route('userapp.history', $user->UniqueID) }}
+                                                            class="mb-0 text-sm">{{ $user->name }}</a>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                {{-- <p class="text-xs font-weight-bold mb-0">{{ $user->alats->Kode_alat }}</p> --}}
+                                                <a href={{ route('userapp.history', $user->UniqueID) }}
+                                                    class="text-xs font-weight-bold mb-0">{{ $user->email }}</a>
                                             </td>
-                                            {{-- <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-success">Online</span>
-                                            </td> --}}
-                                            {{-- <td class="align-middle text-center">
+                                            <td class="align-middle text-center">
                                                 <span
                                                     class="text-secondary text-xs font-weight-bold">{{ $user->created_at->format('d/m/y') }}</span>
-                                            </td> --}}
+                                            </td>
                                             <td class="align-middle">
                                                 <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
                                                     data-toggle="tooltip" data-original-title="Edit user">
@@ -74,7 +66,6 @@
         </div>
     </div>
 
-    <!-- Modal -->
     <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -101,10 +92,6 @@
                             <label for="profile_picture">Profile Picture</label>
                             <input type="file" class="form-control" id="profile_picture" name="profile_picture">
                         </div>
-                        @php
-                            $generatedCode = uniqid();
-                        @endphp
-
                         <button type="submit" class="btn btn-primary">Add User</button>
                     </form>
                 </div>

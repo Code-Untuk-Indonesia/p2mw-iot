@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('alats', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('userapps_id')->unique(); // Ensure this is unique for one-to-one
+            $table->unsignedBigInteger('userapps_id'); // Ensure this is unique for one-to-one
             $table->string('kejadian');
             $table->timestamps();
 
