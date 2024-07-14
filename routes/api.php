@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HistoryController;
+use App\Http\Controllers\Api\RealtimeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,3 +26,4 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
 Route::put('update', [AuthController::class, 'update'])->middleware('auth:api');
 Route::get('history/{userApp}', [HistoryController::class, 'history'])->middleware('auth:api');
+Route::get('/user/{userApp}/realtimes', [RealtimeController::class, 'index'])->middleware('auth:api');
