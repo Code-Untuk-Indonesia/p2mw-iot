@@ -42,7 +42,7 @@ return [
         ],
         'api' => [
             'driver' => 'jwt',
-            'provider' => 'users',
+            'provider' => 'user_apps',
         ],
     ],
 
@@ -69,10 +69,10 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'user_apps' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\UserApp::class,
+        ],
     ],
 
     /*

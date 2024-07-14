@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class UserApp extends Model
+class UserApp extends Authenticatable implements JWTSubject
 {
     use HasFactory;
 
@@ -29,5 +31,15 @@ class UserApp extends Model
     public function getKeyName()
     {
         return 'UniqueID';
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }
