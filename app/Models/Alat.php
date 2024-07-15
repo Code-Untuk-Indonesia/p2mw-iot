@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +11,8 @@ class Alat extends Model
 
     protected $fillable = [
         'userapps_id',
-        'kejadian'
+        'kejadian',
+        'kodealat'
     ];
 
     public function userApp()
