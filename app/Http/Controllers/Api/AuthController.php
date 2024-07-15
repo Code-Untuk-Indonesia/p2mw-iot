@@ -45,8 +45,14 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'profile_picture_url' => $user->profile_picture ? asset('storage/' . $user->profile_picture) : null,
-            'user_id' => $user->UniqueID,
+            'user' => [
+                'id' => $user->UniqueID,
+                'name' => $user->name,
+                'email' => $user->email,
+                'profile_picture' => $user->profile_picture,
+                'created_at' => $user->created_at,
+                'updated_at' => $user->updated_at,
+            ],
         ], 201);
     }
 
@@ -69,7 +75,14 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'user_id' => $user->UniqueID,
+            'user' => [
+                'id' => $user->UniqueID,
+                'name' => $user->name,
+                'email' => $user->email,
+                'profile_picture' => $user->profile_picture,
+                'created_at' => $user->created_at,
+                'updated_at' => $user->updated_at,
+            ],
         ], 200);
     }
 
