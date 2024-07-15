@@ -12,21 +12,26 @@ class HistoryController extends Controller
 {
     public function history()
     {
-        // Get the authenticated user
+
         $user = Auth::guard('api')->user();
 
-        // Check if the user is authenticated
         if (!$user) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        // Fetch histories for the authenticated user
         $histories = History::whereHas('alat', function ($query) use ($user) {
             $query->where('userapps_id', $user->UniqueID);
         })->with('alat', 'lokasi')->get();
 
         return response()->json([
-            'user' => $user,
+            'user' => [
+                'id' => $user->UniqueID,
+                'name' => $user->name,
+                'email' => $user->email,
+                'profile_picture' => $user->profile_picture,
+                'created_at' => $user->created_at,
+                'updated_at' => $user->updated_at,
+            ],
             'histories' => $histories
         ], 200);
     }
