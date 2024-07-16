@@ -2,63 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\History;
+use App\Models\UserApp;
 use Illuminate\Http\Request;
 
 class HistoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $users = UserApp::all();
+        return view('admin.user-history', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function userHistory(Request $request, $userId)
     {
-        //
-    }
+        $user = UserApp::where('UniqueID', $userId)->firstOrFail();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $histories = History::whereHas('alat', function ($query) use ($user) {
+            $query->where('userapps_id', $user->UniqueID);
+        })->with('alat')->get();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return response()->json(['user' => $user, 'histories' => $histories]);
     }
 }

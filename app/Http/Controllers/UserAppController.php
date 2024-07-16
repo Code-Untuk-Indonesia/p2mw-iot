@@ -55,13 +55,4 @@ class UserAppController extends Controller
         Log::info('User created:', $userApp->toArray());
         return redirect()->route('userapp.index')->with('success', 'User created successfully.');
     }
-
-    public function history(UserApp $userApp)
-    {
-        $histories = History::whereHas('alat', function ($query) use ($userApp) {
-            $query->where('userapps_id', $userApp->UniqueID);
-        })->with('alat')->get();
-
-        return view('admin.user-history', compact('userApp', 'histories'));
-    }
 }

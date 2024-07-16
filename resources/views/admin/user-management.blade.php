@@ -36,13 +36,12 @@
                                                     <img src="{{ Storage::url($user->profile_picture) }}"
                                                         class="avatar avatar-sm me-3" alt="user1">
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <a href={{ route('userapp.history', $user->UniqueID) }}
-                                                            class="mb-0 text-sm">{{ $user->name }}</a>
+                                                        <a href="javascript:;" class="mb-0 text-sm">{{ $user->name }}</a>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <a href={{ route('userapp.history', $user->UniqueID) }}
+                                                <a href="javascript:;"
                                                     class="text-xs font-weight-bold mb-0">{{ $user->email }}</a>
                                             </td>
                                             <td class="align-middle text-center">

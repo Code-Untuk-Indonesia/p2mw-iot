@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlatController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\UserAppController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,8 +27,10 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('userapp', UserAppController::class);
     Route::resource('alats', AlatController::class);
+    Route::resource('history', HistoryController::class);
     // Route::post('/alats', [AlatController::class, 'store'])->name('alats.store');
-    Route::get('userapp/{userApp}/history', [UserAppController::class, 'history'])->name('userapp.history');
+    // Route::get('all-user-history', [HistoryController::class, 'index'])->name('history.all_user_history');
+    // Route::get('user/{userId}/history', [HistoryController::class, 'userHistory'])->name('history.user_history');
 });
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
