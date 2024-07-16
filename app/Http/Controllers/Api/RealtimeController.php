@@ -19,24 +19,14 @@ class RealtimeController extends Controller
 
         $realtimes = Realtime::whereHas('alat', function ($query) use ($user) {
             $query->where('userapps_id', $user->UniqueID);
-        })->with(['alat', 'lokasi'])->get();
+        })->get();
 
         $realtimeData = $realtimes->map(function ($realtime) {
             return [
                 'id' => $realtime->id,
                 'alat_id' => $realtime->alat_id,
-                'lokasi_id' => $realtime->lokasi_id,
-                'alat' => [
-                    'id' => $realtime->alat->id,
-                    'kodealat' => $realtime->alat->kodealat,
-                    'kejadian' => $realtime->alat->kejadian,
-                    'userapps_id' => $realtime->alat->userapps_id,
-                ],
-                'lokasi' => [
-                    'id' => $realtime->lokasi->id,
-                    'lat' => $realtime->lokasi->lat,
-                    'long' => $realtime->lokasi->long,
-                ],
+                'lat' => $realtime->lat,
+                'long' => $realtime->long,
                 'created_at' => $realtime->created_at,
                 'updated_at' => $realtime->updated_at,
             ];
