@@ -10,27 +10,32 @@ use Illuminate\Support\Facades\Auth;
 
 class HistoryController extends Controller
 {
-    public function history()
+    public function history($userAppId)
     {
-
         $user = Auth::guard('api')->user();
 
         if (!$user) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        $histories = History::whereHas('alat', function ($query) use ($user) {
-            $query->where('userapps_id', $user->UniqueID);
+        $userApp = UserApp::where('UniqueID', $userAppId)->first();
+
+        if (!$userApp) {
+            return response()->json(['message' => 'UserApp not found or not authorized'], 404);
+        }
+
+        $histories = History::whereHas('alat', function ($query) use ($userApp) {
+            $query->where('userapps_id', $userApp->UniqueID);
         })->with('alat', 'lokasi')->get();
 
         return response()->json([
             'user' => [
-                'id' => $user->UniqueID,
-                'name' => $user->name,
-                'email' => $user->email,
-                'profile_picture' => $user->profile_picture,
-                'created_at' => $user->created_at,
-                'updated_at' => $user->updated_at,
+                'id' => $userApp->UniqueID,
+                'name' => $userApp->name,
+                'email' => $userApp->email,
+                'profile_picture' => $userApp->profile_picture,
+                'created_at' => $userApp->created_at,
+                'updated_at' => $userApp->updated_at,
             ],
             'histories' => $histories
         ], 200);

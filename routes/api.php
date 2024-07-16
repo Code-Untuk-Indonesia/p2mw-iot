@@ -25,5 +25,5 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
 Route::put('update', [AuthController::class, 'update'])->middleware('auth:api');
-Route::get('history', [HistoryController::class, 'history'])->middleware('auth:api');
+Route::get('history/{userApp}', [HistoryController::class, 'history'])->middleware('auth:api');
 Route::get('realtime', [RealtimeController::class, 'index'])->middleware('auth:api');
