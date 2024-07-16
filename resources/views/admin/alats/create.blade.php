@@ -9,7 +9,7 @@
                         <h6>Add New Tool</h6>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
-                        <form action="{{ route('alats.store') }}" method="POST">
+                        <form method="POST" action="{{ route('alats.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label for="userapps_id">Select User</label>
@@ -25,8 +25,13 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary">Add Tool</button>
+                            <div class="form-group">
+                                <label for="kodealat">Kode Alat</label>
+                                <input type="text" class="form-control" id="kodealat" name="kodealat" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Alat</button>
                         </form>
+
                     </div>
                 </div>
             </div>

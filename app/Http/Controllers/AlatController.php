@@ -21,19 +21,16 @@ class AlatController extends Controller
         return view('admin.alats.create', compact('users'));
     }
 
-
     public function store(Request $request)
     {
         $request->validate([
             'userapps_id' => 'required|exists:user_apps,UniqueID',
+            'kodealat' => 'required|unique:alats,kodealat',
         ]);
 
-        $kodealat = 'kodealat_' . Str::random(10);
-
         Alat::create([
-            'kode_alat' => $kodealat,
+            'kodealat' => $request->kodealat,
             'userapps_id' => $request->userapps_id,
-            'kejadian' => '',
         ]);
 
         return redirect()->route('alats.index')->with('success', 'Alat created successfully.');

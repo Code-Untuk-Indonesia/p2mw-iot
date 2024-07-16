@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('histories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_alat');
-            $table->unsignedBigInteger('Lokasi_id');
-            $table->foreign('Lokasi_id')->references('id')->on('lokasis')->onDelete('cascade');
+            $table->string('long');
+            $table->string('lat');
+            $table->string('kejadian')->default('');
             $table->foreign('id_alat')->references('id')->on('alats')->onDelete('cascade');
             $table->timestamps();
         });

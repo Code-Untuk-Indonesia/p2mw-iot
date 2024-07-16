@@ -60,7 +60,8 @@ class UserAppController extends Controller
     {
         $histories = History::whereHas('alat', function ($query) use ($userApp) {
             $query->where('userapps_id', $userApp->UniqueID);
-        })->with('alat', 'lokasi')->get();
+        })->with('alat')->get();
+
         return view('admin.user-history', compact('userApp', 'histories'));
     }
 }

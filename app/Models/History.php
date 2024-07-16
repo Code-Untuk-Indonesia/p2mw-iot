@@ -9,19 +9,15 @@ class History extends Model
 {
     use HasFactory;
 
-
     protected $fillable = [
         'id_alat',
-        'Lokasi_id'
+        'long',
+        'lat',
+        'kejadian'
     ];
 
     public function alat()
     {
         return $this->belongsTo(Alat::class, 'id_alat');
-    }
-
-    public function lokasi()
-    {
-        return $this->belongsTo(Lokasi::class, 'Lokasi_id');
     }
 }

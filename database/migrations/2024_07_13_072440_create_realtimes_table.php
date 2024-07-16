@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('realtimes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('lokasi_id');
             $table->unsignedBigInteger('alat_id');
-            $table->foreign('lokasi_id')->references('id')->on('lokasis')->onDelete('cascade');
+            $table->string('long');
+            $table->string('lat');
             $table->foreign('alat_id')->references('id')->on('alats')->onDelete('cascade');
             $table->timestamps();
         });

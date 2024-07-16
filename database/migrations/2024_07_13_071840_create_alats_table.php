@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('alats', function (Blueprint $table) {
             $table->id();
-            $table->string('kodealat')->unique()->default('kodealat_default_value');
-            $table->unsignedBigInteger('userapps_id'); // Ensure this is unique for one-to-one
-            $table->string('kejadian')->default('');
+            $table->string('kodealat')->unique();
+            $table->unsignedBigInteger('userapps_id');
             $table->timestamps();
 
             $table->foreign('userapps_id')->references('UniqueID')->on('user_apps')->onDelete('cascade');

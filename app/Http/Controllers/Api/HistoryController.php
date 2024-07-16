@@ -26,7 +26,16 @@ class HistoryController extends Controller
 
         $histories = History::whereHas('alat', function ($query) use ($userApp) {
             $query->where('userapps_id', $userApp->UniqueID);
-        })->with('alat', 'lokasi')->get();
+        })->with('alat')->get();
+
+        $formattedHistories = $histories->map(function ($history) {
+            return [
+                'id' => $history->id,
+                'kejadian' => $history->kejadian,
+                'lokasi' => $history->long . ', ' . $history->lat,
+                'created_at' => $history->created_at,
+            ];
+        });
 
         return response()->json([
             'user' => [
@@ -37,7 +46,7 @@ class HistoryController extends Controller
                 'created_at' => $userApp->created_at,
                 'updated_at' => $userApp->updated_at,
             ],
-            'histories' => $histories
+            'histories' => $formattedHistories
         ], 200);
     }
 }

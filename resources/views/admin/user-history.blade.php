@@ -27,8 +27,8 @@
                                     @foreach ($histories as $history)
                                         <tr>
                                             <td>{{ $history->id }}</td>
-                                            <td>{{ $history->alat->kejadian }}</td>
-                                            <td>{{ $history->lokasi->lat }}, {{ $history->lokasi->long }}</td>
+                                            <td>{{ $history->kejadian }}</td>
+                                            <td>{{ $history->long }}, {{ $history->lat }}</td>
                                             <td>{{ $history->created_at }}</td>
                                         </tr>
                                     @endforeach
