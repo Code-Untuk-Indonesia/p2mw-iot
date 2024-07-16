@@ -9,7 +9,7 @@
                         <h6>Users Management</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#addUserModal">
-                            Tambah User Baru
+                            Add New User
                         </button>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -70,7 +70,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addUserModalLabel">Tambah User Baru</h5>
+                    <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

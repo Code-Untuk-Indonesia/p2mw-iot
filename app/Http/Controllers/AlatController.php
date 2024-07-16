@@ -5,20 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Alat;
 use App\Models\UserApp;
-use Illuminate\Support\Str;
 
 class AlatController extends Controller
 {
     public function index()
     {
         $alats = Alat::with('userApp')->get();
-        return view('admin.alats.index', compact('alats'));
-    }
-
-    public function create()
-    {
         $users = UserApp::all();
-        return view('admin.alats.create', compact('users'));
+        return view('admin.alat-management', compact('alats', 'users'));
     }
 
     public function store(Request $request)
@@ -34,5 +28,29 @@ class AlatController extends Controller
         ]);
 
         return redirect()->route('alats.index')->with('success', 'Alat created successfully.');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'userapps_id' => 'required|exists:user_apps,UniqueID',
+            'kodealat' => 'required|unique:alats,kodealat,' . $id,
+        ]);
+
+        $alat = Alat::findOrFail($id);
+        $alat->update([
+            'kodealat' => $request->kodealat,
+            'userapps_id' => $request->userapps_id,
+        ]);
+
+        return redirect()->route('alats.index')->with('success', 'Alat updated successfully.');
+    }
+
+    public function destroy($id)
+    {
+        $alat = Alat::findOrFail($id);
+        $alat->delete();
+
+        return redirect()->route('alats.index')->with('success', 'Alat deleted successfully.');
     }
 }
