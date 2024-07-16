@@ -24,4 +24,6 @@ class HistoryController extends Controller
 
         return response()->json(['user' => $user, 'histories' => $histories]);
     }
+
+
 }

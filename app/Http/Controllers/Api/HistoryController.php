@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\UserApp;
 use App\Models\History;
+use App\Models\UserApp;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class HistoryController extends Controller
 {
@@ -48,5 +49,29 @@ class HistoryController extends Controller
             ],
             'histories' => $formattedHistories
         ], 200);
+    }
+
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id_alat' => 'required|exists:alats,id',
+            'long' => 'required|string',
+            'lat' => 'required|string',
+            'kejadian' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $history = History::create([
+            'id_alat' => $request->id_alat,
+            'long' => $request->long,
+            'lat' => $request->lat,
+            'kejadian' => $request->kejadian,
+        ]);
+
+        return response()->json(['message' => 'History created successfully', 'data' => $history], 201);
     }
 }
