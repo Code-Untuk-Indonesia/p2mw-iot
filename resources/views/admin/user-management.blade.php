@@ -33,11 +33,12 @@
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
-                                                    <img src="{{ asset('storage/' . $user->profile_picture) }}" class="avatar avatar-sm me-3" alt="user1">
+                                                    <img src="{{ url('storage/' . $user->profile_picture) }}" class="avatar avatar-sm me-3" alt="user1">
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <a href="javascript:;" class="mb-0 text-sm">{{ $user->name }}</a>
                                                     </div>
                                                 </div>
+
 
                                             </td>
                                             <td>
