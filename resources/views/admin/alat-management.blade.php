@@ -6,10 +6,10 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Tools Management</h6>
+                        <h6>Manajemen Alat</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#addToolModal">
-                            Add New Tool
+                            Tambah Alat
                         </button>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -117,13 +117,13 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addToolModalLabel">Add New Tool</h5>
+                        <h5 class="modal-title" id="addToolModalLabel">Tambah Alat</h5>
                     </div>
                     <div class="modal-body">
                         <form method="POST" action="{{ route('alats.store') }}">
                             @csrf
                             <div class="form-group">
-                                <label for="userapps_id">Select User</label>
+                                <label for="userapps_id">Pilih Pengguna</label>
                                 <select class="form-control" id="userapps_id" name="userapps_id" required>
                                     @foreach ($users as $user)
                                         @php
@@ -139,7 +139,7 @@
                                 <label for="kodealat">Kode Alat</label>
                                 <input type="text" class="form-control" id="kodealat" name="kodealat" required>
                             </div>
-                            <button type="submit" class="btn btn-primary">Add Tool</button>
+                            <button type="submit" class="btn btn-primary">Tambah Alat</button>
                         </form>
                     </div>
                 </div>

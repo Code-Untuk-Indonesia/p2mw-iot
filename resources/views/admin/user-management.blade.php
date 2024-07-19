@@ -6,10 +6,10 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Users Management</h6>
+                        <h6>Manajemen Pengguna</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#addUserModal">
-                            Add New User
+                            Tambah Pengguna
                         </button>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -33,7 +33,8 @@
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
-                                                    <img src="{{ url('storage/' . $user->profile_picture) }}" class="avatar avatar-sm me-3" alt="user1">
+                                                    <img src="{{ url('storage/' . $user->profile_picture) }}"
+                                                        class="avatar avatar-sm me-3" alt="user1">
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <a href="javascript:;" class="mb-0 text-sm">{{ $user->name }}</a>
                                                     </div>
@@ -46,7 +47,8 @@
                                                     class="text-xs font-weight-bold mb-0">{{ $user->email }}</a>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">{{ \Carbon\Carbon::parse($user->created_at)->locale('id')->translatedFormat('l, d F Y') }}</span>
+                                                <span
+                                                    class="text-secondary text-xs font-weight-bold">{{ \Carbon\Carbon::parse($user->created_at)->locale('id')->translatedFormat('l, d F Y') }}</span>
                                             </td>
 
 
@@ -72,7 +74,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+                    <h5 class="modal-title" id="addUserModalLabel">Tambah Pengguna</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -94,7 +96,7 @@
                             <label for="profile_picture">Profile Picture</label>
                             <input type="file" class="form-control" id="profile_picture" name="profile_picture">
                         </div>
-                        <button type="submit" class="btn btn-primary">Add User</button>
+                        <button type="submit" class="btn btn-primary">Tambah Pengguna</button>
                     </form>
                 </div>
             </div>

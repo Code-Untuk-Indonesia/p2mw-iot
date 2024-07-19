@@ -8,22 +8,21 @@ use Illuminate\Http\Request;
 
 class HistoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $users = UserApp::all();
-        return view('admin.user-history', compact('users'));
+        $selectedUser = null;
+        $histories = [];
+
+        if ($request->has('userSelect')) {
+            $selectedUser = UserApp::find($request->input('userSelect'));
+            if ($selectedUser) {
+                $histories = History::whereHas('alat', function ($query) use ($selectedUser) {
+                    $query->where('userapps_id', $selectedUser->UniqueID);
+                })->with('alat')->get();
+            }
+        }
+
+        return view('admin.user-history', compact('users', 'selectedUser', 'histories'));
     }
-
-    public function userHistory(Request $request, $userId)
-    {
-        $user = UserApp::where('UniqueID', $userId)->firstOrFail();
-
-        $histories = History::whereHas('alat', function ($query) use ($user) {
-            $query->where('userapps_id', $user->UniqueID);
-        })->with('alat')->get();
-
-        return response()->json(['user' => $user, 'histories' => $histories]);
-    }
-
-
 }

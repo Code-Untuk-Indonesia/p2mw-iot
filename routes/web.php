@@ -28,9 +28,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('userapp', UserAppController::class);
     Route::resource('alats', AlatController::class);
     Route::resource('history', HistoryController::class);
-    // Route::post('/alats', [AlatController::class, 'store'])->name('alats.store');
-    // Route::get('all-user-history', [HistoryController::class, 'index'])->name('history.all_user_history');
-    // Route::get('user/{userId}/history', [HistoryController::class, 'userHistory'])->name('history.user_history');
 });
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
