@@ -42,4 +42,8 @@ class UserApp extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    protected $casts = [
+        'created_at' => 'datetime'
+    ];
 }
