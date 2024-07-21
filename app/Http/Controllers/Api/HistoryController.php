@@ -6,6 +6,7 @@ use App\Models\History;
 use App\Models\UserApp;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Alat;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -51,11 +52,10 @@ class HistoryController extends Controller
         ], 200);
     }
 
-
-    public function store(Request $request)
+    public function store(Request $request, $kodealat)
     {
+
         $validator = Validator::make($request->all(), [
-            'id_alat' => 'required|exists:alats,id',
             'long' => 'required|string',
             'lat' => 'required|string',
             'kejadian' => 'nullable|string',
@@ -65,8 +65,14 @@ class HistoryController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
+        $alat = Alat::where('kodealat', $kodealat)->first();
+
+        if (!$alat) {
+            return response()->json(['message' => 'Alat not found'], 404);
+        }
+
         $history = History::create([
-            'id_alat' => $request->id_alat,
+            'id_alat' => $alat->id,
             'long' => $request->long,
             'lat' => $request->lat,
             'kejadian' => $request->kejadian,

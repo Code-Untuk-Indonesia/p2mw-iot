@@ -21,11 +21,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// mobile apps
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
 Route::put('update', [AuthController::class, 'update'])->middleware('auth:api');
 Route::get('history/{userApp}', [HistoryController::class, 'history'])->middleware('auth:api');
 Route::get('realtime', [RealtimeController::class, 'index'])->middleware('auth:api');
-// api alat
-Route::post('/histories-alat', [HistoryController::class, 'store']);
+
+// esp32
+Route::post('history/{kodealat}', [HistoryController::class, 'store']);
+Route::post('realtime/{kodealat}', [RealtimeController::class, 'store']);
