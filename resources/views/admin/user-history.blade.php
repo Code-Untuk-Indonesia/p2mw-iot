@@ -42,7 +42,14 @@
                                             <tr>
                                                 <td>{{ $history->alat->kodealat }}</td>
                                                 <td>{{ $history->kejadian }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($history->created_at)->locale('id')->translatedFormat('l, d F Y') }}
+                                                <td>
+                                                    <span class="text-secondary text-xs font-weight-bold">
+                                                        <i class="fas fa-clock"></i>
+                                                        {{ \Carbon\Carbon::parse($history->created_at)->format('H:i') }}
+                                                        <br>
+                                                        <i class="fas fa-calendar-alt"></i>
+                                                        {{ \Carbon\Carbon::parse($history->created_at)->locale('id')->translatedFormat('l, d F Y') }}
+                                                    </span>
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -47,12 +47,14 @@
                                                     class="text-xs font-weight-bold mb-0">{{ $user->email }}</a>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span
-                                                    class="text-secondary text-xs font-weight-bold">{{ \Carbon\Carbon::parse($user->created_at)->locale('id')->translatedFormat('l, d F Y') }}</span>
+                                                <span class="text-secondary text-xs font-weight-bold">
+                                                    <i class="fas fa-clock"></i>
+                                                    {{ \Carbon\Carbon::parse($user->created_at)->format('H:i') }}
+                                                    <br>
+                                                    <i class="fas fa-calendar-alt"></i>
+                                                    {{ \Carbon\Carbon::parse($user->created_at)->locale('id')->translatedFormat('l, d F Y') }}
+                                                </span>
                                             </td>
-
-
-
                                             <td class="align-middle">
                                                 <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
                                                     data-toggle="tooltip" data-original-title="Edit user">
