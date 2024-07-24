@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HistoryController;
 use App\Http\Controllers\Api\RealtimeController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,3 +33,6 @@ Route::get('realtime', [RealtimeController::class, 'index'])->middleware('auth:a
 // esp32
 Route::post('history/{kodealat}', [HistoryController::class, 'store']);
 Route::post('realtime/{kodealat}', [RealtimeController::class, 'store']);
+
+// realtime data
+Route::get('realtime-data', [DashboardController::class, 'getRealtimeData']);

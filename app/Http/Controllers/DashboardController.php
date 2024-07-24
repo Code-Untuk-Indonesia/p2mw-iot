@@ -21,4 +21,10 @@ class DashboardController extends Controller
             'realtimeData' => $realtimeData
         ]);
     }
+
+    public function getRealtimeData()
+    {
+        $realtimeData = Realtime::with('alat')->get();
+        return response()->json($realtimeData);
+    }
 }
