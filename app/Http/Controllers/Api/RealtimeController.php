@@ -29,6 +29,7 @@ class RealtimeController extends Controller
                 'alat_id' => $realtime->alat_id,
                 'lat' => $realtime->lat,
                 'long' => $realtime->long,
+                'kejadian' => $realtime->kejadian,
                 'created_at' => $realtime->created_at,
                 'updated_at' => $realtime->updated_at,
             ];
