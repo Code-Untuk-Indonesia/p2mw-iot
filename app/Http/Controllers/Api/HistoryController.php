@@ -34,7 +34,7 @@ class HistoryController extends Controller
             return [
                 'id' => $history->id,
                 'kejadian' => $history->kejadian,
-                'lokasi' => $history->long . ', ' . $history->lat,
+                'lokasi' => $history->lat . ', ' . $history->long,
                 'created_at' => $history->created_at,
             ];
         });
