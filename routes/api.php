@@ -30,6 +30,9 @@ Route::put('update', [AuthController::class, 'update'])->middleware('auth:api');
 Route::get('history/{userApp}', [HistoryController::class, 'history'])->middleware('auth:api');
 Route::get('realtime', [RealtimeController::class, 'index'])->middleware('auth:api');
 
+// end alert mobile apps
+Route::post('realtime/{id}/update', [RealtimeController::class, 'updateStatus']);
+
 // esp32
 Route::post('history/{kodealat}', [HistoryController::class, 'store']);
 Route::post('realtime/{kodealat}', [RealtimeController::class, 'store']);

@@ -75,4 +75,26 @@ class RealtimeController extends Controller
 
         return response()->json(['message' => 'Realtime data processed successfully', 'data' => $realtime], 200);
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|string|in:aman,jatuh',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $realtime = Realtime::find($id);
+
+        if (!$realtime) {
+            return response()->json(['message' => 'Realtime data not found'], 404);
+        }
+
+        $realtime->kejadian = $request->status;
+        $realtime->save();
+
+        return response()->json(['message' => 'Status updated successfully', 'data' => $realtime], 200);
+    }
 }
