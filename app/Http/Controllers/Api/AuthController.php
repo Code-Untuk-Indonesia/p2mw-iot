@@ -29,15 +29,16 @@ class AuthController extends Controller
         $profilePicturePath = null;
         if ($request->hasFile('profile_picture')) {
             $profilePicture = $request->file('profile_picture');
-            $profilePictureName = time() . '_' . $profilePicture->getClientOriginalName();
-            $profilePicturePath = $profilePicture->storeAs('profile_pictures', $profilePictureName, 'public');
+            $profilePictureName = time() . '_' . $profilePicture->getClientOriginalExtension();
+            $profilePicturePath = public_path('profile_pictures');
+            $profilePicture->move($profilePicturePath, $profilePictureName);
         }
 
         $user = UserApp::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'profile_picture' => $profilePicturePath,
+            'profile_picture' => $profilePictureName,
         ]);
 
         $token = JWTAuth::fromUser($user);
@@ -61,15 +62,11 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        // Check credentials using Auth::attempt for debugging
         if (!Auth::guard('api')->attempt($credentials)) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        // Get the user
         $user = Auth::guard('api')->user();
-
-        // Create JWT token
         $token = JWTAuth::fromUser($user);
 
         return response()->json([
@@ -89,18 +86,21 @@ class AuthController extends Controller
     // Logout
     public function logout()
     {
-        JWTAuth::invalidate(JWTAuth::getToken());
-
-        return response()->json(['message' => 'Successfully logged out']);
+        try {
+            JWTAuth::invalidate(JWTAuth::getToken());
+            return response()->json(['message' => 'Successfully logged out'], 200);
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json(['message' => 'Failed to logout, please try again'], 500);
+        }
     }
 
-    // update
+
+    // Update
     public function update(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
+            'email' => 'required|string|email|max:255|unique:user_apps,email,' . Auth::guard('api')->user()->id,
             'password' => 'required|string|min:6',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif'
         ]);
@@ -109,14 +109,17 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $profilePicturePath = null;
+        $user = Auth::guard('api')->user();
+        $profilePicturePath = $user->profile_picture; // Default to existing path
+
         if ($request->hasFile('profile_picture')) {
             $profilePicture = $request->file('profile_picture');
-            $profilePictureName = time() . '_' . $profilePicture->getClientOriginalName();
-            $profilePicturePath = $profilePicture->storeAs('profile_pictures', $profilePictureName, 'public');
+            $profilePictureName = time() . '_' . $profilePicture->getClientOriginalExtension();
+            $profilePicturePath = public_path('profile_pictures');
+            $profilePicture->move($profilePicturePath, $profilePictureName);
+            $profilePicturePath = $profilePictureName;
         }
 
-        $user = Auth::guard('api')->user();
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
@@ -124,5 +127,19 @@ class AuthController extends Controller
         $user->save();
 
         return response()->json(['message' => 'Successfully updated!'], 200);
+    }
+
+    // Refresh token
+    public function refresh()
+    {
+        try {
+            $newToken = JWTAuth::refresh(JWTAuth::getToken());
+            return response()->json([
+                'access_token' => $newToken,
+                'token_type' => 'Bearer',
+            ], 200);
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json(['message' => 'Token invalid'], 401);
+        }
     }
 }

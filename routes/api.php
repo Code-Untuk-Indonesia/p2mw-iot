@@ -25,10 +25,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // mobile apps
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
-Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
-Route::put('update', [AuthController::class, 'update'])->middleware('auth:api');
-Route::get('history/{userApp}', [HistoryController::class, 'history'])->middleware('auth:api');
-Route::get('realtime', [RealtimeController::class, 'index'])->middleware('auth:api');
+Route::group(['middleware' => ['auth:api']], function () {
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::put('update', [AuthController::class, 'update']);
+    Route::get('history/{userApp}', [HistoryController::class, 'history']);
+    Route::get('realtime', [RealtimeController::class, 'index']);
+});
 
 // end alert mobile apps
 Route::post('realtime/{id}/update', [RealtimeController::class, 'updateStatus']);

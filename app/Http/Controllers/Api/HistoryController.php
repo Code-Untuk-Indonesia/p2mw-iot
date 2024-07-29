@@ -12,17 +12,18 @@ use Illuminate\Support\Facades\Validator;
 
 class HistoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     public function history($userAppId)
     {
         $user = Auth::guard('api')->user();
 
-        if (!$user) {
-            return response()->json(['message' => 'Unauthorized'], 401);
-        }
-
         $userApp = UserApp::where('UniqueID', $userAppId)->first();
 
-        if (!$userApp) {
+        if (!$userApp || $userApp->id !== $user->id) {
             return response()->json(['message' => 'UserApp not found or not authorized'], 404);
         }
 
@@ -54,7 +55,6 @@ class HistoryController extends Controller
 
     public function store(Request $request, $kodealat)
     {
-
         $validator = Validator::make($request->all(), [
             'long' => 'required|string',
             'lat' => 'required|string',
@@ -71,11 +71,13 @@ class HistoryController extends Controller
             return response()->json(['message' => 'Alat not found'], 404);
         }
 
+        $kejadian = $request->has('kejadian') ? ucfirst($request->kejadian) : null;
+
         $history = History::create([
             'id_alat' => $alat->id,
             'long' => $request->long,
             'lat' => $request->lat,
-            'kejadian' => $request->kejadian,
+            'kejadian' => $kejadian
         ]);
 
         return response()->json(['message' => 'History created successfully', 'data' => $history], 201);
