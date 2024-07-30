@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\UserApp;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
@@ -140,6 +141,32 @@ class AuthController extends Controller
             ], 200);
         } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
             return response()->json(['message' => 'Token invalid'], 401);
+        }
+    }
+
+    //validate token
+    public function validateToken(Request $request)
+    {
+        try {
+            // Ambil token dari body request
+            $token = $request->input('token');
+
+            // Validasi token
+            if (!$token) {
+                return response()->json(['valid' => false], 401);
+            }
+
+            // Coba autentikasi pengguna dengan token
+            $user = JWTAuth::setToken($token)->authenticate();
+
+            if (!$user) {
+                return response()->json(['valid' => false], 401);
+            }
+
+            return response()->json(['valid' => true], 200);
+        } catch (JWTException $e) {
+            // Token tidak valid atau sudah kedaluwarsa
+            return response()->json(['valid' => false], 401);
         }
     }
 }

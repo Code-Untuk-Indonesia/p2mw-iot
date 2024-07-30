@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('history/{userApp}', [HistoryController::class, 'history']);
     Route::get('realtime', [RealtimeController::class, 'index']);
 });
+Route::post('/validate_token', [AuthController::class, 'validateToken']);
 
 // end alert mobile apps
 Route::post('realtime/{id}/update', [RealtimeController::class, 'updateStatus']);
