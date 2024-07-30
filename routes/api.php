@@ -38,7 +38,7 @@ Route::post('/validate_token', [AuthController::class, 'validateToken']);
 Route::post('realtime/{id}/update', [RealtimeController::class, 'updateStatus']);
 
 // esp32
-Route::post('history/{kodealat}', [HistoryController::class, 'store']);
+Route::post('history-esp32/{kodealat}', [HistoryController::class, 'store']);
 Route::post('realtime/{kodealat}', [RealtimeController::class, 'store']);
 
 // realtime data
