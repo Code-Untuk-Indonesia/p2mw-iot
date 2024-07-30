@@ -79,7 +79,7 @@ class RealtimeController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'status' => 'required|string|in:aman,jatuh',
+            'status' => 'required|string|in:Aman,Jatuh',
         ]);
 
         if ($validator->fails()) {
