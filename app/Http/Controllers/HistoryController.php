@@ -19,7 +19,7 @@ class HistoryController extends Controller
             if ($selectedUser) {
                 $histories = History::whereHas('alat', function ($query) use ($selectedUser) {
                     $query->where('userapps_id', $selectedUser->UniqueID);
-                })->with('alat')->get();
+                })->with('alat')->orderBy('created_at', 'desc')->get();
             }
         }
 

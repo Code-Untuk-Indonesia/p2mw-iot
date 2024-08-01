@@ -39,8 +39,6 @@
                                                         <a href="javascript:;" class="mb-0 text-sm">{{ $user->name }}</a>
                                                     </div>
                                                 </div>
-
-
                                             </td>
                                             <td>
                                                 <a href="javascript:;"
@@ -65,6 +63,10 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                        </div>
+                        <!-- Pagination Links -->
+                        <div class="d-flex justify-content-center mt-3 mb-3s">
+                            {{ $users->links() }}
                         </div>
                     </div>
                 </div>

@@ -10,7 +10,7 @@ class AlatController extends Controller
 {
     public function index()
     {
-        $alats = Alat::with('userApp')->get();
+        $alats = Alat::with('userApp')->orderBy('created_at', 'desc')->simplePaginate(5);
         $users = UserApp::all();
         return view('admin.alat-management', compact('alats', 'users'));
     }

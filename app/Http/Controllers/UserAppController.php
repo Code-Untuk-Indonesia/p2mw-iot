@@ -13,7 +13,7 @@ class UserAppController extends Controller
 {
     public function index()
     {
-        $users = UserApp::all();
+        $users = UserApp::orderBy('created_at', 'desc')->simplePaginate(5);
         return view('admin.user-management', compact('users'));
     }
 
