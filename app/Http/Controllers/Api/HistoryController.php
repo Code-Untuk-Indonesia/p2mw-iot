@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Alat;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class HistoryController extends Controller
 {
@@ -35,7 +36,7 @@ class HistoryController extends Controller
                 'id' => $history->id,
                 'kejadian' => $history->kejadian,
                 'lokasi' => $history->lat . ', ' . $history->long,
-                'created_at' => $history->created_at,
+                'created_at' => Carbon::parse($history->created_at)->timezone('Asia/Jakarta')->toDateTimeString(),
             ];
         });
 
@@ -45,17 +46,15 @@ class HistoryController extends Controller
                 'name' => $userApp->name,
                 'email' => $userApp->email,
                 'profile_picture' => $userApp->profile_picture,
-                'created_at' => $userApp->created_at,
-                'updated_at' => $userApp->updated_at,
+                'created_at' => Carbon::parse($userApp->created_at)->timezone('Asia/Jakarta')->toDateTimeString(),
+                'updated_at' => Carbon::parse($userApp->updated_at)->timezone('Asia/Jakarta')->toDateTimeString(),
             ],
             'histories' => $formattedHistories
         ], 200);
     }
 
-
     public function store(Request $request, $kodealat)
     {
-
         $validator = Validator::make($request->all(), [
             'long' => 'required|string',
             'lat' => 'required|string',
