@@ -28,7 +28,7 @@ class HistoryController extends Controller
 
         $histories = History::whereHas('alat', function ($query) use ($userApp) {
             $query->where('userapps_id', $userApp->UniqueID);
-        })->with('alat')->get();
+        })->with('alat')->latest()->take(10)->get();
 
         $formattedHistories = $histories->map(function ($history) {
             return [
@@ -51,6 +51,7 @@ class HistoryController extends Controller
             'histories' => $formattedHistories
         ], 200);
     }
+
 
     public function store(Request $request, $kodealat)
     {
