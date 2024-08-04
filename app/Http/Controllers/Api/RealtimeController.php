@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Realtime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class RealtimeController extends Controller
 {
@@ -30,8 +31,8 @@ class RealtimeController extends Controller
                 'lat' => $realtime->lat,
                 'long' => $realtime->long,
                 'kejadian' => $realtime->kejadian,
-                'created_at' => $realtime->created_at,
-                'updated_at' => $realtime->updated_at,
+                'created_at' => Carbon::parse($realtime->created_at)->timezone('Asia/Jakarta')->toDateTimeString(),
+                'updated_at' => Carbon::parse($realtime->updated_at)->timezone('Asia/Jakarta')->toDateTimeString(),
             ];
         });
 
