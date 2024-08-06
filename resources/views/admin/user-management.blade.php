@@ -59,7 +59,7 @@
                                                 </span>
                                             </td>
                                             <td class="align-middle">
-                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                                     data-bs-target="#editUserModal" data-uniqueid="{{ $user->UniqueID }}"
                                                     data-name="{{ $user->name }}" data-email="{{ $user->email }}">
                                                     Edit
