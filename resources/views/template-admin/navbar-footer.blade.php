@@ -9,18 +9,18 @@
     <title>
         P2MW IoT - @yield('title')
     </title>
-    <!--     Fonts and icons     -->
+    <!-- Fonts and icons -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Nucleo Icons -->
-    <link href={{ asset('template-admin/assets/css/nucleo-icons.css') }} rel="stylesheet" />
-    <link href={{ asset('template-admin/assets/css/nucleo-svg.css') }} rel="stylesheet" />
+    <link href="{{ asset('template-admin/assets/css/nucleo-icons.css') }}" rel="stylesheet" />
+    <link href="{{ asset('template-admin/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <link href={{ asset('template-admin/assets/css/nucleo-svg.css') }} rel="stylesheet" />
     <!-- CSS Files -->
-    <link id="pagestyle" href={{ asset('template-admin/assets/css/soft-ui-dashboard.css') }} rel="stylesheet" />
+    <link id="pagestyle" href="{{ asset('template-admin/assets/css/soft-ui-dashboard.css') }}" rel="stylesheet" />
 </head>
+
 
 <body class="g-sidenav-show  bg-gray-100">
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
