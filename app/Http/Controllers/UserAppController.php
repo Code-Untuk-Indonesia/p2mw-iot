@@ -75,45 +75,52 @@ class UserAppController extends Controller
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
-        // Find the user by ID
-        $userApp = UserApp::findOrFail($id);
+        try {
+            // Find the user by ID
+            $userApp = UserApp::findOrFail($id);
 
-        // Update the user data
-        $userApp->name = $request->name;
-        $userApp->email = $request->email;
+            // Update the user data
+            $userApp->name = $request->name;
+            $userApp->email = $request->email;
 
-        // Only update password if it's provided
-        if ($request->filled('password')) {
-            $userApp->password = Hash::make($request->password);
-        }
-
-        // Handle the profile picture update
-        if ($request->hasFile('profile_picture')) {
-            // Delete the old profile picture if it exists
-            if ($userApp->profile_picture) {
-                $oldProfilePicturePath = public_path($userApp->profile_picture);
-                if (file_exists($oldProfilePicturePath)) {
-                    unlink($oldProfilePicturePath);
-                }
+            // Only update password if it's provided
+            if ($request->filled('password')) {
+                $userApp->password = Hash::make($request->password);
             }
 
-            // Get the uploaded file
-            $file = $request->file('profile_picture');
+            // Handle the profile picture update
+            if ($request->hasFile('profile_picture')) {
+                // Delete the old profile picture if it exists
+                if ($userApp->profile_picture) {
+                    $oldProfilePicturePath = public_path($userApp->profile_picture);
+                    if (file_exists($oldProfilePicturePath)) {
+                        unlink($oldProfilePicturePath);
+                    }
+                }
 
-            // Generate a unique file name and move the file to the public path
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $destinationPath = public_path('images/profile_picture');
-            $file->move($destinationPath, $fileName);
+                // Get the uploaded file
+                $file = $request->file('profile_picture');
 
-            // Set the path relative to the public directory
-            $userApp->profile_picture = 'images/profile_picture/' . $fileName;
+                // Generate a unique file name and move the file to the public path
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $destinationPath = public_path('images/profile_picture');
+                $file->move($destinationPath, $fileName);
+
+                // Set the path relative to the public directory
+                $userApp->profile_picture = 'images/profile_picture/' . $fileName;
+            }
+
+            // Save the updated user data
+            $userApp->save();
+
+            Log::info('User updated:', $userApp->toArray());
+
+            return redirect()->route('userapp.index')->with('success', 'User updated successfully.');
+        } catch (\Exception $e) {
+            Log::error('Update failed:', ['error' => $e->getMessage()]);
+
+            // Return with error message
+            return redirect()->route('userapp.index')->with('error', 'Failed to update user. Please try again.');
         }
-
-        // Save the updated user data
-        $userApp->save();
-
-        Log::info('User updated:', $userApp->toArray());
-
-        return redirect()->route('userapp.index')->with('success', 'User updated successfully.');
     }
 }
