@@ -59,13 +59,11 @@
                                                 </span>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="#" class="text-secondary font-weight-bold text-xs"
-                                                    data-bs-toggle="modal" data-bs-target="#editUserModal"
-                                                    data-id="{{ $user->id }}" data-name="{{ $user->name }}"
-                                                    data-email="{{ $user->email }}"
-                                                    data-profile-picture="{{ $profilePicturePath }}">
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#editUserModal" data-uniqueid="{{ $user->UniqueID }}"
+                                                    data-name="{{ $user->name }}" data-email="{{ $user->email }}">
                                                     Edit
-                                                </a>
+                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -129,18 +127,21 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" id="userId" name="id">
+                        <input type="hidden" id="userUniqueID" name="UniqueID">
                         <div class="mb-3">
                             <label for="userName" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="userName" name="name" required>
+                            <input type="text" class="form-control" id="userName" name="name"
+                                placeholder="Enter name">
                         </div>
                         <div class="mb-3">
                             <label for="userEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="userEmail" name="email" required>
+                            <input type="email" class="form-control" id="userEmail" name="email"
+                                placeholder="Enter email">
                         </div>
                         <div class="mb-3">
                             <label for="userPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="userPassword" name="password">
+                            <input type="password" class="form-control" id="userPassword" name="password"
+                                placeholder="Enter new password">
                         </div>
                         <div class="mb-3">
                             <label for="userProfilePicture" class="form-label">Profile Picture</label>
@@ -161,22 +162,24 @@
             const editUserModal = document.getElementById('editUserModal');
             editUserModal.addEventListener('show.bs.modal', function(event) {
                 const button = event.relatedTarget;
-                const id = button.getAttribute('data-id');
+                const uniqueID = button.getAttribute('data-uniqueid');
                 const name = button.getAttribute('data-name');
                 const email = button.getAttribute('data-email');
-                const profilePicture = button.getAttribute('data-profile-picture');
 
                 const modalBody = editUserModal.querySelector('.modal-body');
-                modalBody.querySelector('#userId').value = id;
-                modalBody.querySelector('#userName').value = name;
-                modalBody.querySelector('#userEmail').value = email;
+                modalBody.querySelector('#userUniqueID').value = uniqueID;
 
-                // Clear the file input
+                // Only set the values if they are provided
+                modalBody.querySelector('#userName').value = name || '';
+                modalBody.querySelector('#userEmail').value = email || '';
+
+                // Clear the password input and file input
+                modalBody.querySelector('#userPassword').value = '';
                 modalBody.querySelector('#userProfilePicture').value = '';
 
                 // Update the form action URL
                 const form = editUserModal.querySelector('form');
-                form.action = `{{ route('userapp.update', ':id') }}`.replace(':id', id);
+                form.action = `{{ url('userapp') }}/${uniqueID}`;
             });
         });
     </script>

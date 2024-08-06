@@ -63,64 +63,55 @@ class UserAppController extends Controller
         return redirect()->route('userapp.index')->with('success', 'User created successfully.');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $userapp)
     {
-        Log::info('Update request data:', $request->all());
+        Log::info('Request data:', $request->all());
 
-        // Validate the request data
+        // Validate the request, but make all fields nullable
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:user_apps,email,' . $id,
+            'name' => 'nullable',
+            'email' => 'nullable|email|unique:user_apps,email,' . $userapp . ',UniqueID',
             'password' => 'nullable|min:6',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
-        try {
-            // Find the user by ID
-            $userApp = UserApp::findOrFail($id);
+        // Find the user by UniqueID
+        $userApp = UserApp::where('UniqueID', $userapp)->firstOrFail();
 
-            // Update the user data
+        // Update the user's data only if provided in the request
+        if ($request->filled('name')) {
             $userApp->name = $request->name;
-            $userApp->email = $request->email;
-
-            // Only update password if it's provided
-            if ($request->filled('password')) {
-                $userApp->password = Hash::make($request->password);
-            }
-
-            // Handle the profile picture update
-            if ($request->hasFile('profile_picture')) {
-                // Delete the old profile picture if it exists
-                if ($userApp->profile_picture) {
-                    $oldProfilePicturePath = public_path($userApp->profile_picture);
-                    if (file_exists($oldProfilePicturePath)) {
-                        unlink($oldProfilePicturePath);
-                    }
-                }
-
-                // Get the uploaded file
-                $file = $request->file('profile_picture');
-
-                // Generate a unique file name and move the file to the public path
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $destinationPath = public_path('images/profile_picture');
-                $file->move($destinationPath, $fileName);
-
-                // Set the path relative to the public directory
-                $userApp->profile_picture = 'images/profile_picture/' . $fileName;
-            }
-
-            // Save the updated user data
-            $userApp->save();
-
-            Log::info('User updated:', $userApp->toArray());
-
-            return redirect()->route('userapp.index')->with('success', 'User updated successfully.');
-        } catch (\Exception $e) {
-            Log::error('Update failed:', ['error' => $e->getMessage()]);
-
-            // Return with error message
-            return redirect()->route('userapp.index')->with('error', 'Failed to update user. Please try again.');
         }
+
+        if ($request->filled('email')) {
+            $userApp->email = $request->email;
+        }
+
+        if ($request->filled('password')) {
+            $userApp->password = Hash::make($request->password);
+        }
+
+        $gambarPath = $userApp->profile_picture;
+
+        if ($request->hasFile('profile_picture')) {
+            $file = $request->file('profile_picture');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $destinationPath = public_path('images/profile_picture');
+            $file->move($destinationPath, $fileName);
+
+            $gambarPath = 'images/profile_picture/' . $fileName;
+
+            if ($userApp->profile_picture && file_exists(public_path($userApp->profile_picture))) {
+                unlink(public_path($userApp->profile_picture));
+            }
+
+            $userApp->profile_picture = $gambarPath;
+        }
+
+        $userApp->save();
+
+        Log::info('User updated:', $userApp->toArray());
+
+        return redirect()->route('userapp.index')->with('success', 'User updated successfully.');
     }
 }
